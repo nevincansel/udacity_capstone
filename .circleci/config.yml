@@ -38,7 +38,7 @@ commands:
             && rm -rf /var/cache/apk/*
 
 jobs:
-  build:
+  lint:
     executor: python
     steps:
       - checkout
@@ -62,7 +62,7 @@ jobs:
             . venv/bin/activate
             make lint
 
-    build:
+  build:
     machine: true
     working_directory: ~/app
     steps:
@@ -76,7 +76,7 @@ jobs:
             docker tag nevincansel/udacitycapstone:${CIRCLE_WORKFLOW_ID:0:7} nevincansel/udacitycapstone:latest
             docker push nevincansel/udacitycapstone:latest
 
-  create-cluster:
+  create-deployment:
     executor: aws-eks/python3
     parameters:
       cluster-name:
@@ -114,9 +114,12 @@ jobs:
 
 
 workflows:
-  default:
+  capstone:
     jobs:
-      - build
+      - lint
+      - build:
+          requires:
+            - "lint"
       - aws-eks/create-cluster:
           cluster-name: udacitycapstone
       - create-deployment:
@@ -142,6 +145,4 @@ workflows:
       - aws-eks/delete-cluster:
           cluster-name: udacitycapstone
           requires:
-            - test-cluster      
-
-
+            - test-cluster
