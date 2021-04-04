@@ -96,6 +96,7 @@ jobs:
 workflows:
   capstone:
     jobs:
+
       - aws-eks/update-container-image:
           cluster-name: udacitycapstone
           container-image-updates: nevincansel/udacitycapstone
@@ -105,8 +106,8 @@ workflows:
                   resource-types: Deployment
                   wait: true
           record: true
-          requires:
-              - create-deployment
+          #requires:
+          #    - create-deployment
           resource-name: Deployment/udacitycapstone
       - test-cluster:
           cluster-name: udacitycapstone
