@@ -39,8 +39,7 @@ commands:
 
 jobs:
   build:
-    executor: python  
-    working_directory: ~/app
+    executor: python
     steps:
       - checkout
 
