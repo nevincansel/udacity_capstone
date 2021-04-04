@@ -115,6 +115,7 @@ workflows:
                   resource-types: deployment
                   wait: true
           record: true
+          dry-run: true
           requires:
               - create-deployment
           resource-name: deployment/udacitycapstone
