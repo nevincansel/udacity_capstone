@@ -4,6 +4,7 @@ metadata:
   name: udacitycapstone
   labels:
     app: udacitycapstone
+  namespace: default
 spec:
   replicas: 3
   selector:
@@ -11,21 +12,20 @@ spec:
       app: udacitycapstone
   strategy:
     rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  minReadySeconds: 5
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: udacitycapstone
     spec:
       containers:
-      - name: udacitycapstone
-        image: nevincansel/udacitycapstone
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 80
-        resources:
-          requests:
-            cpu: 100m
-          limits:
-            cpu: 300m
+        - image: nevincansel/udacitycapstone
+          imagePullPolicy: Always
+          name: udacitycapstone
+          ports:
+            - containerPort: 80
 
 ---
 apiVersion: v1
