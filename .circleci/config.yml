@@ -103,7 +103,6 @@ workflows:
           post-steps:
               - kubernetes/delete-resource:
                   resource-names: udacitycapstone
-                  resource-types: Deployment
                   wait: true
           record: true
           #requires:
