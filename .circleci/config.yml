@@ -58,11 +58,16 @@ jobs:
 
   create-deployment:
     executor: aws-eks/python3
+    parameters:
+      cluster-name:
+        description: |
+          udacitycapstone
+        type: string
     steps:
       - checkout
       - kubernetes/install
       - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: udacitycapstone
+          cluster-name: << parameters.cluster-name >>
           install-kubectl: true
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
@@ -71,10 +76,15 @@ jobs:
 
   test-cluster:
     executor: aws-eks/python3
+    parameters:
+      cluster-name:
+        description: |
+          udacitycapstone
+        type: string
     steps:
       - kubernetes/install
       - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: udacitycapstone
+          cluster-name: << parameters.cluster-name >>
       - run:
           name: Test cluster
           command: |
