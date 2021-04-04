@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udacitycapstone
+  labels:
+    app: udacitycapstone
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: udacitycapstone
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+    spec:
+      containers:
+      - name: udacitycapstone
+        image: nevincansel/udacitycapstone
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            cpu: 300m
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: udacitycapstone
+  labels:
+    app: udacitycapstone
+spec:
+  type: LoadBalancer
+  selector:
+    app: udacitycapstone
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
