@@ -96,12 +96,22 @@ jobs:
 workflows:
   capstone:
     jobs:
-
+      - lint
+      - build:
+          requires:
+            - lint
+      - aws-eks/create-cluster:
+          cluster-name: udacitycapstone
+      - create-deployment:
+          cluster-name: udacitycapstone
+          requires:
+            - aws-eks/create-cluster
       - aws-eks/update-container-image:
           cluster-name: udacitycapstone
           resource-name: "deployment/udacitycapstone"
           container-image-updates: "nevincansel/udacitycapstone"
           get-rollout-status: true
+          resource-file-path: deployment.yml
           record: true
           post-steps:
             - kubernetes/delete-resource:
