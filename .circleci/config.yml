@@ -103,12 +103,12 @@ workflows:
           namespace: udacitycapstone
           get-rollout-status: true
           record: true
-          #post-steps:
-            #- kubernetes/delete-resource:
-                #resource-types: deployments
-                #resource-names: udacitycapstone
-                #now: true
-                #wait: true
+          post-steps:
+            - kubernetes/delete-resource:
+                resource-types: deployment
+                resource-names: udacitycapstone
+                now: true
+                wait: true
           #requires:
             #- create-deployment
       - test-cluster:
