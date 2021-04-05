@@ -111,7 +111,6 @@ workflows:
           resource-name: "deployment/udacitycapstone"
           container-image-updates: "nevincansel/udacitycapstone"
           get-rollout-status: true
-          resource-file-path: deployment.yml
           record: true
           post-steps:
             - kubernetes/delete-resource:
@@ -119,8 +118,8 @@ workflows:
                 resource-names: "udacitycapstone"
                 now: true
                 wait: true
-          #requires:
-           #   - create-deployment
+          requires:
+            - create-deployment
       - test-cluster:
           cluster-name: udacitycapstone
           requires:
