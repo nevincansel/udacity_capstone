@@ -109,7 +109,7 @@ workflows:
       - test-cluster:
           cluster-name: udacitycapstone
           requires:
-            - areate-deployment
+            - create-deployment
       - aws-eks/delete-cluster:
           cluster-name: udacitycapstone
           requires:
