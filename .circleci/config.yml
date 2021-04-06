@@ -106,22 +106,10 @@ workflows:
           cluster-name: udacitycapstone
           requires:
             - aws-eks/create-cluster
-      - aws-eks/update-container-image:
-          cluster-name: udacitycapstone
-          resource-name: deployment/udacitycapstone
-          container-image-updates: nevincansel/udacitycapstone
-          record: true
-          post-steps:
-            - kubernetes/delete-resource:
-                resource-types: deployment
-                resource-names: udacitycapstone
-                wait: true
-          requires:
-            - create-deployment
       - test-cluster:
           cluster-name: udacitycapstone
           requires:
-            - aws-eks/update-container-image
+            - areate-deployment
       - aws-eks/delete-cluster:
           cluster-name: udacitycapstone
           requires:
