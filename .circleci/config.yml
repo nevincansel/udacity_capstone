@@ -110,3 +110,7 @@ workflows:
           cluster-name: udacitycapstone
           requires:
             - create-deployment
+      - aws-eks/delete-cluster:
+          cluster-name: udacitycapstone
+          requires:
+            - test-cluster
